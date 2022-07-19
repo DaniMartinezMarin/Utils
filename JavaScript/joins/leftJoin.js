@@ -22,3 +22,5 @@ const leftJoin = (objArr1, objArr2, key1, key2) => {
         )
     );
 }
+
+console.log( leftJoin(people, cars, "carid", "id") );
