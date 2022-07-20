@@ -1,12 +1,12 @@
 const arrayA = [
-    { id: 4, name: "Dani", position: "1" },
+    { id: 4, name: "Dani" },
     { id: 1, name: "David" },
     { id: 2, name: "John" },
     { id: 3, name: "Matt" },
 ];
 
 const arrayB = [
-    { id: 5, name: "Dani" },
+    { id: 5, name: "Dani", position: "1" },
     { id: 6, name: "Jose", position: "2" },
     { id: 2, name: "John", position: "2" },
     { id: 3, name: "Matt", position: "2" },
@@ -47,21 +47,19 @@ const innerJoinSecondMethod = (arrayA, arrayB) => {
 /* ---------------------------------------------------------------------------------------------- */
 
 const innerJoinByKey = (arrayA, arrayB, key) => {
-    const innerJoinMap = new Map();
+    const map = new Map();
 
-    arrayA.forEach( (arrayAItem) => {
-        innerJoinMap.set(arrayAItem[key], arrayAItem);
-    });
+    arrayA.forEach( arrayAItem => map.set(arrayAItem[key], arrayAItem) );
 
+    let join = [];
     arrayB.forEach( (arrayBItem) => {
-        let existing = innerJoinMap.get(arrayBItem[key]);
-        if (existing == undefined) innerJoinMap.set(arrayBItem[key], arrayBItem);
-        else Object.assign(existing, arrayBItem);
+        let existing = map.get(arrayBItem[key]);
+        if (existing != undefined) join.push({...existing, ...arrayBItem})
     });
 
-    return Array.from(innerJoinMap.values());
+    return join;
 }
 
 /*  console.log( innerJoinFistMethod(arrayA, arrayB) ); */
 /*console.log( innerJoinSecondMethod(arrayA, arrayB) ); */
-console.log( innerJoinByKey(arrayA, arrayB, 'id') );
+console.log( innerJoinByKey(arrayA, arrayB, 'position') );
